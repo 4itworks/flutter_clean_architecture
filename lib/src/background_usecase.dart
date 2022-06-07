@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'dart:isolate';
-import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 
@@ -132,6 +131,7 @@ abstract class BackgroundUseCase<T, Params> extends UseCase<T, Params> {
 
   @override
   @nonVirtual
+  // ignore: null_argument_to_non_null_type
   Future<Stream<T?>> buildUseCaseStream(_) => Future.value(null);
 
   /// Provides a [UseCaseTask] to be executed on a different isolate.

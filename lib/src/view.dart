@@ -139,7 +139,7 @@ abstract class ViewState<Page extends View, Con extends Controller>
 
   ViewState(this._controller) {
     _controller.initController(globalKey);
-    WidgetsBinding.instance!.addObserver(_controller);
+    WidgetsBinding.instance.addObserver(_controller);
     _logger = Logger('$runtimeType');
   }
 
@@ -152,6 +152,7 @@ abstract class ViewState<Page extends View, Con extends Controller>
     }
 
     _logger.info('didChangeDependencies triggered on $runtimeType');
+    // ignore: invalid_use_of_visible_for_overriding_member
     _controller.onDidChangeDependencies();
     super.didChangeDependencies();
   }
@@ -160,6 +161,7 @@ abstract class ViewState<Page extends View, Con extends Controller>
   @nonVirtual
   void initState() {
     _logger.info('Initializing state of $runtimeType');
+    // ignore: invalid_use_of_visible_for_overriding_member
     _controller.onInitState();
     super.initState();
   }
@@ -175,6 +177,7 @@ abstract class ViewState<Page extends View, Con extends Controller>
   void deactivate() {
     _logger.info(
         'Deactivating $runtimeType. (This is usually called right before dispose)');
+    // ignore: invalid_use_of_visible_for_overriding_member
     _controller.onDeactivated();
     super.deactivate();
   }
@@ -183,6 +186,7 @@ abstract class ViewState<Page extends View, Con extends Controller>
   @mustCallSuper
   void reassemble() {
     _logger.info('Reassembling $runtimeType.');
+    // ignore: invalid_use_of_visible_for_overriding_member
     _controller.onReassembled();
     super.reassemble();
   }
