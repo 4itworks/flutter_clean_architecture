@@ -167,7 +167,6 @@ abstract class ViewState<Page extends View, Con extends Controller>
   }
 
   @override
-  @nonVirtual
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<Con>.value(value: _controller, child: view);
   }
