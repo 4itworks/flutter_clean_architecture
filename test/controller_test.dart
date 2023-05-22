@@ -122,7 +122,7 @@ class CounterController extends Controller {
   }
 }
 
-class CounterPage extends View {
+class CounterPage extends FCAView {
   final CounterController controller;
   final Function onWidgetBuild;
   final Function onControlledWidgetBuild;

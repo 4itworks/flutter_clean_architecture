@@ -137,7 +137,7 @@ class TestController extends Controller {
   }
 }
 
-class TestPage extends View {
+class TestPage extends FCAView {
   final TestController controller;
 
   TestPage({Key? key, required this.controller}) : super(key: key);
