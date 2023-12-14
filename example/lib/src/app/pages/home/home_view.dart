@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import '../../../data/repositories/data_users_repository.dart';
 
-class HomePage extends View {
+class HomePage extends FCAView {
   HomePage({Key? key, this.title}) : super(key: key);
 
   final String? title;
@@ -44,7 +44,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                 builder: (context, controller) {
                   return Text(
                     controller.user == null ? '' : '${controller.user}',
-                    style: Theme.of(context).textTheme.headline4,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   );
                 },
               ),

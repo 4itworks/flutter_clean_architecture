@@ -199,11 +199,11 @@ lib/
 ### Example Code
 Checkout a small example [here](./example/) and a full application built [here](https://github.com/ShadyBoukhary/Axion-Technologies-HnH).
 
-#### View and ControlledWidgetBuilder
+#### FCAView and ControlledWidgetBuilder
 
 ```dart
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-class CounterPage extends View {
+class CounterPage extends FCAView {
     @override
      // Dependencies can be injected here
      State<StatefulWidget> createState() => CounterState();
@@ -251,7 +251,7 @@ For example:
 
 ```dart
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-class CounterPage extends View {
+class CounterPage extends FCAView {
     @override
      // Dependencies can be injected here
      State<StatefulWidget> createState() => CounterState();

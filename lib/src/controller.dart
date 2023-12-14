@@ -41,8 +41,8 @@ import 'package:provider/provider.dart';
 ///       }
 ///     }
 ///
-///     // ***************** View *****************
-///     class CounterPage extends View {
+///     // ***************** FCAView *****************
+///     class CounterPage extends FCAView {
 ///       @override
 ///       // you can inject dependencies for the controller and the state in here
 ///       State<StatefulWidget> createState() => CounterState(CounterController());
@@ -80,7 +80,6 @@ abstract class Controller
   late Logger logger;
   late GlobalKey<State<StatefulWidget>> _globalKey;
 
-  @mustCallSuper
   Controller() {
     logger = Logger('$runtimeType');
     _isMounted = true;
@@ -344,7 +343,7 @@ typedef ControlledBuilder<Con extends Controller> = Widget Function(
 /// Example:
 ///
 /// ```dart
-///   class ExamplePage extends View {
+///   class ExamplePage extends FCAView {
 ///     @override
 ///     State<StatefulWidget> createState() => ExampleState();
 ///   }

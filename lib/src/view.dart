@@ -56,7 +56,7 @@ typedef ViewBuilder = Widget Function(BuildContext context);
 /// ```
 ///
 /// You can optionally set globally new default values for breakpoints. To do so, just check on [FlutterCleanArchitecture.setDefaultViewBreakpoints]
-abstract class ResponsiveViewState<Page extends View, Con extends Controller>
+abstract class ResponsiveViewState<Page extends FCAView, Con extends Controller>
     extends ViewState<Page, Con> {
   ResponsiveViewState(Con controller) : super(controller);
 
@@ -126,7 +126,7 @@ abstract class ResponsiveViewState<Page extends View, Con extends Controller>
 ///     }
 ///
 /// ```
-abstract class ViewState<Page extends View, Con extends Controller>
+abstract class ViewState<Page extends FCAView, Con extends Controller>
     extends State<Page> {
   final GlobalKey<State<StatefulWidget>> globalKey =
       GlobalKey<State<StatefulWidget>>();
@@ -206,7 +206,7 @@ abstract class ViewState<Page extends View, Con extends Controller>
 /// If a [RouteObserver] is given to the [View], it is used to register its [Controller] as
 /// a subscriber, which provides the ability to listen to push and pop route events.
 /// ```dart
-///   class CounterPage extends View {
+///   class CounterPage extends FCAView {
 ///     CounterPage({RouteObserver observer, Key key}): super(routeObserver: routeObserver, key: key);
 ///     @override
 ///     // Dependencies can be injected here
@@ -215,10 +215,10 @@ abstract class ViewState<Page extends View, Con extends Controller>
 ///
 /// ```
 ///
-abstract class View extends StatefulWidget {
+abstract class FCAView extends StatefulWidget {
   @override
   final Key? key;
   final RouteObserver? routeObserver;
 
-  View({this.routeObserver, this.key}) : super(key: key);
+  FCAView({this.routeObserver, this.key}) : super(key: key);
 }

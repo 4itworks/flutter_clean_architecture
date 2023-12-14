@@ -186,7 +186,7 @@ The widgets can access the `Controller` in the tree via the `FlutterCleanArchite
 ## [0.0.1] - Tuesday, April 30th, 2019
 
 * Implementation of the Clean Architecture by Uncle Bob in Flutter Library
-  * View class
+  * FCAView class
   * Controller class
   * Presenter class
   * UseCase class

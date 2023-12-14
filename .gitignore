@@ -9,3 +9,8 @@ ios/.generated/
 ios/Flutter/Generated.xcconfig
 ios/Runner/GeneratedPluginRegistrant.*
 .vscode/
+android/local.properties
+example/ios/Flutter/flutter_export_environment.sh
+ios/Flutter/flutter_export_environment.sh
+macos/Flutter/ephemeral/Flutter-Generated.xcconfig
+macos/Flutter/ephemeral/flutter_export_environment.sh
