@@ -102,6 +102,9 @@ abstract class Controller
         case AppLifecycleState.detached:
           onDetached();
           break;
+        case AppLifecycleState.hidden:
+          onHidden();
+          break;
       }
     }
   }
@@ -257,6 +260,9 @@ abstract class Controller
   /// ```
   @visibleForOverriding
   void onDetached() {}
+
+  @visibleForOverriding
+  void onHidden() {}
 
   /// Called before the view is deactivated.
   /// When the view is in this context, it means that the view is about to be extracted from the widget tree, but it may be

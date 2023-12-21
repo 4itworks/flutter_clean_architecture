@@ -183,6 +183,16 @@ abstract class ViewState<Page extends FCAView, Con extends Controller>
 
   @override
   @mustCallSuper
+  void hidden() {
+    _logger.info(
+        'Deactivating $runtimeType. (This is usually called right before dispose)');
+    // ignore: invalid_use_of_visible_for_overriding_member
+    _controller.onDeactivated();
+    super.deactivate();
+  }
+
+  @override
+  @mustCallSuper
   void reassemble() {
     _logger.info('Reassembling $runtimeType.');
     // ignore: invalid_use_of_visible_for_overriding_member

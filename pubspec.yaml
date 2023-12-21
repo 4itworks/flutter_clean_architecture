@@ -4,8 +4,8 @@ version: 5.0.2
 homepage: https://github.com/ShadyBoukhary/flutter_clean_architecture
 
 environment:
-  sdk: ">=3.0.1 <4.0.0"
-  flutter: ">=3.0.1"
+  sdk: ">=3.2.3 <4.0.0"
+  flutter: ">=3.16.5 <4.0.0"
 
 dependencies:
   flutter:
