@@ -172,6 +172,10 @@ abstract class Controller
     _globalKey = key;
   }
 
+  /// Check if the [Controller] is still mounted. This is useful for checking if the [Controller] is still
+  @protected
+  bool get isMounted => _isMounted;
+
   /// Retrieves the [BuildContext] associated with the `View`. Will throw an error if initController() was not called prior.
   @protected
   BuildContext getContext() {
