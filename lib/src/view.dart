@@ -181,7 +181,6 @@ abstract class ViewState<Page extends FCAView, Con extends Controller>
     super.deactivate();
   }
 
-  @override
   @mustCallSuper
   void hidden() {
     _logger.info(
