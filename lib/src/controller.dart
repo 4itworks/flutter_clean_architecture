@@ -84,6 +84,7 @@ abstract class Controller
     logger = Logger('$runtimeType');
     _isMounted = true;
     initListeners();
+    FlutterCleanArchitecture.observer?.onControllerCreated(this);
   }
 
   @override
@@ -142,6 +143,7 @@ abstract class Controller
   @override
   @nonVirtual
   void dispose() {
+    FlutterCleanArchitecture.observer?.onControllerDisposed(this);
     _isMounted = false;
     logger.info('Disposing $runtimeType');
     super.dispose();

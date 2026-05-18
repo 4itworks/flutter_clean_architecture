@@ -111,9 +111,19 @@ abstract class BackgroundUseCase<T, Params> extends UseCase<T, Params> {
   @override
   void execute(Observer<T> observer, [Params? params]) async {
     if (!isRunning) {
+      FlutterCleanArchitecture.observer?.onUseCaseExecuted(this, params);
       _state = BackgroundUseCaseState.loading;
-      _subject.listen(observer.onNext,
-          onError: observer.onError, onDone: observer.onComplete);
+      _subject.listen((data) {
+        FlutterCleanArchitecture.observer?.onUseCaseNext(this, data);
+        observer.onNext(data);
+      },
+          onError: (error) {
+        FlutterCleanArchitecture.observer?.onUseCaseError(this, error);
+        observer.onError(error);
+      }, onDone: () {
+        FlutterCleanArchitecture.observer?.onUseCaseComplete(this);
+        observer.onComplete();
+      });
       _run = buildUseCaseTask();
       Isolate.spawn<BackgroundUseCaseParams>(_run,
               BackgroundUseCaseParams(_receivePort.sendPort, params: params))
