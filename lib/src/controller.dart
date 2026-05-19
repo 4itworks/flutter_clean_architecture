@@ -347,7 +347,6 @@ abstract class Controller
   ///
   /// **Warning:** Always ensure that sensitive data (PII like passwords, credit cards, CVV,
   /// tax numbers, etc.) is masked or omitted to comply with security standards.
-  @visibleForOverriding
   Map<String, dynamic> getStateSnapshot() => const {};
 
   /// Centralized error handling mechanism inside the base [Controller].
