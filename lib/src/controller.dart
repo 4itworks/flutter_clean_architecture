@@ -340,6 +340,47 @@ abstract class Controller
   /// ```
   @visibleForOverriding
   void onInitState() {}
+
+  /// Returns a snapshot of the current state of this [Controller] at this moment.
+  /// Override this in child controllers to expose relevant variables for observability
+  /// (e.g. error contexts, logging, state snapshots in Sentry).
+  ///
+  /// **Warning:** Always ensure that sensitive data (PII like passwords, credit cards, CVV,
+  /// tax numbers, etc.) is masked or omitted to comply with security standards.
+  @visibleForOverriding
+  Map<String, dynamic> getStateSnapshot() => const {};
+
+  /// Centralized error handling mechanism inside the base [Controller].
+  /// This method intercepts errors, captures the current [getStateSnapshot], and
+  /// dispatches them to the global observer [CleanArchitectureObserver] for tracking
+  /// and reporting (e.g., to Sentry).
+  ///
+  /// Child controllers should call this method in their error-handling blocks,
+  /// e.g., inside `catch` blocks or `Presenter` error callbacks.
+  @protected
+  @mustCallSuper
+  void onError(Object error, StackTrace stackTrace) {
+    logger.severe('Error caught in $runtimeType: $error', error, stackTrace);
+
+    // Dispatch to the global CleanArchitectureObserver (if registered)
+    FlutterCleanArchitecture.observer
+        ?.onControllerError(this, error, stackTrace);
+  }
+
+  /// Safely runs an asynchronous [action]. If an error occurs, it is automatically
+  /// caught, logged, and passed to [onError].
+  ///
+  /// This helps prevent unhandled exceptions from crashing the UI and ensures
+  /// proper observability with zero impact on the main rendering pipeline.
+  @protected
+  Future<T?> runSafe<T>(Future<T> Function() action) async {
+    try {
+      return await action();
+    } catch (e, stackTrace) {
+      onError(e, stackTrace);
+      return null;
+    }
+  }
 }
 
 typedef ControlledBuilder<Con extends Controller> = Widget Function(

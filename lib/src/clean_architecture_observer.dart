@@ -10,6 +10,10 @@ abstract class CleanArchitectureObserver {
   /// Called when a [Controller] is disposed.
   void onControllerDisposed(Controller controller) {}
 
+  /// Called when a [Controller] intercepts an error.
+  void onControllerError(
+      Controller controller, Object error, StackTrace? stackTrace) {}
+
   /// Called when a [UseCase] starts execution.
   void onUseCaseExecuted(UseCase useCase, dynamic params) {}
 

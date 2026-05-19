@@ -30,6 +30,45 @@ void main() {
       expect(testObserver.disposedControllers.first, controller);
     });
 
+    test('Controller default state snapshot and error handling', () {
+      final controller = MockController();
+
+      // Check default stateSnapshot
+      expect(controller.getStateSnapshot(), const <String, dynamic>{});
+
+      // Trigger error and check observer
+      expect(testObserver.controllerErrorsEmitted.length, 0);
+      final testError = Exception('Controller failed');
+      final testStack = StackTrace.current;
+
+      controller.triggerError(testError, testStack);
+
+      expect(testObserver.controllerErrorsEmitted.length, 1);
+      expect(testObserver.controllerErrorsEmitted.first.controller, controller);
+      expect(testObserver.controllerErrorsEmitted.first.error, testError);
+      expect(testObserver.controllerErrorsEmitted.first.stackTrace, testStack);
+    });
+
+    test('Controller runSafe success and error flows', () async {
+      final controller = MockController();
+
+      // Success flow
+      final result =
+          await controller.triggerRunSafe(() async => 'success_data');
+      expect(result, 'success_data');
+      expect(testObserver.controllerErrorsEmitted.length, 0);
+
+      // Error flow
+      final resultError = await controller.triggerRunSafe(() async {
+        throw Exception('Safe failure');
+      });
+      expect(resultError, isNull);
+      expect(testObserver.controllerErrorsEmitted.length, 1);
+      expect(testObserver.controllerErrorsEmitted.first.controller, controller);
+      expect(testObserver.controllerErrorsEmitted.first.error.toString(),
+          contains('Safe failure'));
+    });
+
     test('UseCase execute success flow', () async {
       final useCase = MockUseCase();
       final observer = MockObserver<int>();
@@ -82,6 +121,8 @@ class TestObserver extends CleanArchitectureObserver {
   final List<({UseCase useCase, dynamic value})> nextEmitted = [];
   final List<({UseCase useCase, dynamic error})> errorsEmitted = [];
   final List<UseCase> completedUseCases = [];
+  final List<({Controller controller, Object error, StackTrace? stackTrace})>
+      controllerErrorsEmitted = [];
 
   @override
   void onControllerCreated(Controller controller) {
@@ -91,6 +132,13 @@ class TestObserver extends CleanArchitectureObserver {
   @override
   void onControllerDisposed(Controller controller) {
     disposedControllers.add(controller);
+  }
+
+  @override
+  void onControllerError(
+      Controller controller, Object error, StackTrace? stackTrace) {
+    controllerErrorsEmitted
+        .add((controller: controller, error: error, stackTrace: stackTrace));
   }
 
   @override
@@ -117,6 +165,10 @@ class TestObserver extends CleanArchitectureObserver {
 class MockController extends Controller {
   @override
   void initListeners() {}
+
+  void triggerError(Object e, StackTrace s) => onError(e, s);
+
+  Future<T?> triggerRunSafe<T>(Future<T> Function() action) => runSafe(action);
 }
 
 class MockUseCase extends UseCase<int, String> {

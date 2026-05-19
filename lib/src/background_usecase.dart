@@ -5,6 +5,7 @@ import 'package:rxdart/rxdart.dart';
 import 'dart:async';
 
 enum BackgroundUseCaseState { idle, loading, calculating }
+
 typedef UseCaseTask = void Function(
     BackgroundUseCaseParams backgroundUseCaseParams);
 
@@ -116,8 +117,7 @@ abstract class BackgroundUseCase<T, Params> extends UseCase<T, Params> {
       _subject.listen((data) {
         FlutterCleanArchitecture.observer?.onUseCaseNext(this, data);
         observer.onNext(data);
-      },
-          onError: (error) {
+      }, onError: (error) {
         FlutterCleanArchitecture.observer?.onUseCaseError(this, error);
         observer.onError(error);
       }, onDone: () {

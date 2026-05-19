@@ -115,8 +115,8 @@ abstract class UseCase<T, Params> {
   /// Subscribes to the [Observerable] with the [Observer] callback functions.
   void execute(Observer<T> observer, [Params? params]) async {
     FlutterCleanArchitecture.observer?.onUseCaseExecuted(this, params);
-    final StreamSubscription subscription = (await buildUseCaseStream(params))
-        .listen((data) {
+    final StreamSubscription subscription =
+        (await buildUseCaseStream(params)).listen((data) {
       FlutterCleanArchitecture.observer?.onUseCaseNext(this, data);
       observer.onNext(data);
     }, onDone: () {
