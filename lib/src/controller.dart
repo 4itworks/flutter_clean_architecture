@@ -118,6 +118,21 @@ abstract class Controller
     }
   }
 
+  /// Wraps a [VoidCallback] so it silently no-ops when the [Controller] is not
+  /// mounted. This eliminates the need for manual `if (!isMounted) return;` in
+  /// every Presenter callback.
+  @protected
+  VoidCallback guard(VoidCallback callback) => () {
+        if (_isMounted) callback();
+      };
+
+  /// Wraps a typed callback so it silently no-ops when the [Controller] is not
+  /// mounted.
+  @protected
+  void Function(T) guarded<T>(void Function(T) callback) => (T value) {
+        if (_isMounted) callback(value);
+      };
+
   /// Unmounts the [Controller] from the `View`. Called by the `View` automatically.
   /// Any cleaning, disposing should go in here.
   ///
@@ -152,6 +167,8 @@ abstract class Controller
   /// Retrieves the [State<StatefulWidget>] associated with the [View]
   @protected
   State<StatefulWidget> getState() {
+    assert(_isMounted,
+        'Controller is not mounted. Cannot access state after disposal.');
     assert(_globalKey.currentState != null,
         '''Make sure you are using the `globalKey` that is built into the `ViewState` inside your `build()` method.
         For example:
@@ -181,6 +198,8 @@ abstract class Controller
   /// Retrieves the [BuildContext] associated with the `View`. Will throw an error if initController() was not called prior.
   @protected
   BuildContext getContext() {
+    assert(_isMounted,
+        'Controller is not mounted. Cannot access context after disposal.');
     assert(_globalKey.currentContext != null,
         '''Make sure you are using the `globalKey` that is built into the `ViewState` inside your `build()` method.
         For example:
