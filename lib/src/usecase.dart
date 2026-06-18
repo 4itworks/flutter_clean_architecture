@@ -1,5 +1,4 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:flutter_clean_architecture/src/observer.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:logging/logging.dart';
 import 'dart:async';
